@@ -1,0 +1,217 @@
+1.Create a query which will display Staff Name, Salary of each staff. Format the salary to be 15 characters long and left padded with ‘$’.
+ 
+SQL> select staff_name,lpad(staff_sal,15,'$') as staff_sal from staff_master;
+
+STAFF_NAME
+--------------------------------------------------
+STAFF_SAL
+------------------------------------------------------------
+nandini
+$$$$$$$$20000.5
+
+bharath
+$$$$$$$$36000.5
+
+kishore
+$$$$$$$$20000.5
+
+
+STAFF_NAME
+--------------------------------------------------
+STAFF_SAL
+------------------------------------------------------------
+bhavana
+$$$$$$$$62000.5
+
+madhu
+$$$$$$$$25500.5
+
+2. 2.Display name and date of birth of students where date of birth must be displayed in the format similar to “January, 12 1981” for those who were born on Saturday or Sunday.
+
+SQL> SELECT student_name,TO_CHAR(student_dob,'MONTH DD YYYY') AS student_dob FROM student_master WHERE TO_CHAR(student_dob,'DAY') LIKE  ('%SATURDAY%') OR TO_CHAR(student_dob,'DAY') LIKE  ('%SUNDAY%') ;
+
+STUDENT_NAME
+--------------------------------------------------
+STUDENT_DOB
+--------------------------------------------
+vanu
+JANUARY   05 2019
+
+bhanu
+DECEMBER  01 2019
+
+3.Display each Staff name and number of months they worked for the organization. Label the column as ‘Months Worked’. Order your result by number of months employed. Also Round the number of months to closest whole number.
+
+SQL> select staff_name, (months_between(sysdate,hiredate)) as month_worked from staff_master order by month_worked desc;
+
+STAFF_NAME                                         MONTH_WORKED
+-------------------------------------------------- ------------
+madhu                                                1561.33848
+kishore                                              744.725579
+bharath                                              372.402998
+bhavana                                              268.661063
+nandini                                              252.725579
+
+SQL> select staff_name, ROUND(months_between(sysdate,hiredate)) as month_worked from staff_master order by month_worked desc;
+
+STAFF_NAME                                         MONTH_WORKED
+-------------------------------------------------- ------------
+madhu                                                      1561
+kishore                                                     745
+bharath                                                     372
+bhavana                                                     269
+nandini                                                     253
+
+
+
+4.List the details of the staff who have joined in first half of December month (irrespective of the year). 
+
+SQL> select * from staff_master WHERE to_char(hiredate,'dd') BETWEEN 1 AND 15 AND to_char(hiredate,'month') LIKE '%december%';
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE
+---------- -------------------------------------------------- -----------
+  DEP_CODE HIREDATE  STAFF_DOB
+---------- --------- ---------
+STAFF_ADDRESS
+--------------------------------------------------------------------------------
+  MGR_CODE  STAFF_SAL
+---------- ----------
+        30 madhu                                                       16
+       882 14-DEC-89 01-FEB-88
+shd
+     42537    25500.5
+5.Write a query that displays Staff Name, Salary, and Grade of all staff. Grade depends on the following table. 
+Salary	Grade
+Salary >=50000	A
+Salary >= 25000 < 50000	B
+Salary>=10000 < 25000	C
+OTHERS	D
+
+ SQL>select staff_name,staff_sal,
+  2  case
+  3  when staff_sal>=50000 then 'grade A'
+  4  when staff_sal>=25000 AND staff_sal<50000 then 'grade B'
+  5  when staff_sal>=10000 AND staff_sal<25000 then 'grade c'
+  6  else 'grade d'
+  7  end case
+  8  from staff_master;
+
+STAFF_NAME                                          STAFF_SAL CASE
+-------------------------------------------------- ---------- -------
+nandini                                               20000.5 grade c
+bharath                                               36000.5 grade B
+kishore                                               20000.5 grade c
+bhavana                                               62000.5 grade A
+madhu                                                 25500.5 grade B
+
+6.Display the Staff Name, Hire date and day of the week on which staff was hired. Label the column as DAY. Order the result by the day of the week starting with Monday.        Hint :Use to_char with hiredate and formats ‘DY’ and ’D’
+
+SQL> select staff_name,hiredate, to_char(hiredate,'day') as day from staff_master order by mod(to_char(hiredate,'d')+5,7);
+
+STAFF_NAME                                         HIREDATE
+-------------------------------------------------- ---------
+DAY
+------------------------------------
+kishore                                            02-JAN-58
+thursday
+
+bhavana                                            04-SEP-97
+thursday
+
+bharath                                            12-JAN-89
+thursday
+
+
+STAFF_NAME                                         HIREDATE
+-------------------------------------------------- ---------
+DAY
+------------------------------------
+madhu                                              14-DEC-89
+saturday
+
+nandini                                            02-JAN-99
+saturday
+
+7.Write a query to find the position of third occurrence of ‘i’ in the given word ‘Mississippi’. 
+
+SQL> select instr('Mississippi','i',2,3) from dual;
+
+INSTR('MISSISSIPPI','I',2,3)
+----------------------------
+                           8
+
+8.Write a query to find the pay date for the month. Pay date is the last Friday of the month. Display the date in the format “Twenty Eighth of January, 2002”. Label the heading as PAY DATE. Hint: use to_char, next_day and last_day functions
+
+SQL> select  to_char(Next_day(Last_day(sysdate)-7,'friday'),'ddthsp "of" month,yyyy') as pay_date from dual;
+
+PAY_DATE
+-----------------------------------------------------------
+thirty-first of january  ,2020
+
+
+
+9.Display Student code, Name and Dept Name. Display “Electricals” if dept code = 20, “Electronics” if Dept code =30 and “Others” for all other Dept codes in the Dept Name column. Hint : Use Decode 
+
+SQL> select student_name,student_code,dept_code, decode(dept_code,20,'electrical',30,'electronics','others') from student_master;
+
+STUDENT_NAME                                       STUDENT_CODE  DEPT_CODE
+-------------------------------------------------- ------------ ----------
+DECODE(DEPT
+-----------
+nandini                                                  169111         36
+others
+
+nandini                                                  169111         36
+others
+
+nandhu                                                   169144         76
+others
+
+
+STUDENT_NAME                                       STUDENT_CODE  DEPT_CODE
+-------------------------------------------------- ------------ ----------
+DECODE(DEPT
+-----------
+madhu                                                    169184         16
+others
+
+
+
+2.2 GROUP FUNCTIONS:-
+
+1.Display the Highest, Lowest, Total & Average salary of all staff. Label the columns Maximum, Minimum, Total and Average respectively for each Department code. Also round the result to the nearest whole number.
+
+
+SQL> select dep_code, ROUND(min(staff_sal)) as minimum,ROUND(max(staff_sal)) as maxinum,ROUND(avg(staff_sal)) as average ,ROUND(sum(staff_sal)) as total from staff_master group by dep_code;
+
+  DEP_CODE    MINIMUM    MAXINUM    AVERAGE      TOTAL
+---------- ---------- ---------- ---------- ----------
+       852      20001      20001      20001      20001
+       897      62001      62001      62001      62001
+       542      36001      36001      36001      36001
+       877      20001      20001      20001      20001
+       882      25501      25501      25501      25501
+
+2.Display Department code and number of managers working in that department. Label the column as ‘Total Number of Managers’ for each department.
+
+SQL>select dep_code,COUNT(mgr_code) as total_number_of_managers from staff_master group by dep_code;
+
+  DEP_CODE TOTAL_NUMBER_OF_MANAGERS
+---------- ------------------------
+       852                        1
+       897                        1
+       542                        1
+       877                        1
+       882                        1
+
+3.Get the Department number, and sum of Salary of all non-managers where the sum is greater than 20000. 
+
+ SQL>select deptno,sum(sal) from emp where job NOT IN 'manager' group by deptno having sum(sal)>20000;
+
+    DEPTNO   SUM(SAL)
+---------- ----------
+        22      60000
+        36      25000
+        62      65000
+
+
