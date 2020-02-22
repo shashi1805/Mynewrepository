@@ -178,8 +178,8 @@ public class FileProgram extends Thread
 {
 	public static void main(String[] args)throws Exception 
 	{
-		FileReader fi = new FileReader("C:\\Users\\my\\eclipse-workspace\\Nandini\\src\\vjit\\Account.java");
-		FileWriter fw = new FileWriter("C:\\Users\\my\\eclipse-workspace\\Nandini\\src\\vjit\\Account.java");
+		FileReader fi = new FileReader("C:\\Users\\my\\eclipse-workspace\\multithreading\\src\\vjit\\Account.java");
+		FileWriter fw = new FileWriter("C:\\Users\\my\\eclipse-workspace\\multithreading\\src\\vjit\\Account.java");
 		CopyDataThread c = new CopyDataThread(fi,fw);
 	}
 }
