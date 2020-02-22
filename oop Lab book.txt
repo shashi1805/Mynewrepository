@@ -1,0 +1,244 @@
+Lab 2.	 Writing down class structure 
+
+1).package university;
+
+public class DiscreateMathamatics {
+ 
+	String sections;
+	int courseId;
+	String ProfessorName;
+	int proExperiance;
+	String proDesignation;
+	String RomLocation;
+	String TestLevel;
+	String TestType;
+	String grade;
+	public static void main(String[] args)
+	{
+		 DiscreateMathamatics a=new  DiscreateMathamatics();
+	}
+}
+(or)
+University- Super class/Base class/Parent Class.
+  Discrete Mathematics, Database & Information Systems, Islamic, History-Sub Classes/Child Classes.
+Graph Theory - attribute of Discrete Mathematics
+   ORDBMS- Information Systems
+   OLAP- Distribued Systems.
+a-object in discrete mathematics,
+    b-object in database & Information systems
+    c-object in Islamic
+    d-object in History
+    a,b,c,d,e -unique courses codes.
+Professor-Class
+Experience, Qualification- Attributes of professor class
+lecture halls,workshops, seminar rooms- objects of university class
+pre_test, mid level tests, end semester tests- Obects of University class.
+calculate grade-method in university class.
+------------------------------------------------------------------------------------------------------------------
+
+2).package vjit;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.*;
+public class DateClass {
+String date;
+public static void main(String[] args) 
+{
+	Scanner sc=new Scanner(System.in);
+	String date;
+	date=sc.next();
+	LocalDate fdate=LocalDate.parse(date);
+	System.out.println("Specific date:"+date);
+	
+	System.out.println("--------------------------------------");
+	
+	System.out.println("day of the date:"+fdate.getDayOfMonth());
+	System.out.println("month of date:"+fdate.getMonth());
+	System.out.println("day of the week:"+fdate.getDayOfWeek());
+	System.out.println("month value of day:"+fdate.getMonthValue());
+	
+	System.out.println("--------------------------------------");
+	
+	 Date date1 = new Date();  
+     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy"); 
+     String Date = sdf.format(date1);  
+     System.out.println("Date in the format of America : "+Date);
+     
+     System.out.println("--------------------------------------");
+     
+     Date date2 = new Date();  
+     SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy"); 
+     String Date2 = sdf1.format(date2);  
+     System.out.println("Date in the format of British : "+Date2);
+    
+     System.out.println("--------------------------------------");
+     
+     Date date3 = new Date();  
+     SimpleDateFormat sdf2 = new SimpleDateFormat("dd.mm.yyyy"); 
+     String Date3 = sdf2.format(date3);  
+     System.out.println("Date in the format of Japanese: "+Date3);
+     
+	System.out.println("--------------------------------------"); 
+     
+    LocalDate datee=LocalDate.now();
+    System.out.println("current date:"+datee);
+    LocalDate datee1=LocalDate.now().plusMonths(3);
+    System.out.println("After adding 3 months:"+datee1);
+    LocalDate datee2=LocalDate.now().plusDays(2);
+    System.out.println("Afte adding two days:"+datee2);
+    
+    System.out.println("--------------------------------------");
+    
+    LocalDate datee4=LocalDate.now();
+    System.out.println("current date:"+datee4);
+    LocalDate datee5=LocalDate.now().plusMonths(-5);
+    System.out.println("After removing 5 months:"+datee5);
+    LocalDate datee6=LocalDate.now().plusDays(-4);
+    System.out.println("Afte removing 4 days:"+datee6);
+    
+    System.out.println("--------------------------------------");
+    
+    LocalDate dd=LocalDate.of(1999,05,15);
+    LocalDate now=LocalDate.now();
+    Period diff=Period.between(dd,now);
+    System.out.println("difference between days:"+diff.getDays());
+    
+    
+    
+  
+}
+}
+ OUTPUT: -
+
+1999-05-02
+Specific date:1999-05-02
+--------------------------------------
+day of the date:2
+month of date:MAY
+day of the week:SUNDAY
+month value of day:5
+--------------------------------------
+Date in the format of America : 02/09/2020
+--------------------------------------
+Date in the format of British : 09/02/2020
+--------------------------------------
+Date in the format of Japanese: 09.12.2020
+--------------------------------------
+current date:2020-02-09
+After adding 3 months:2020-05-09
+Afte adding two days:2020-02-11
+--------------------------------------
+current date:2020-02-09
+After removing 5 months:2019-09-09
+Afte removing 4 days:2020-02-05
+--------------------------------------
+difference between days:25
+------------------------------------------------------------------------------------------------------------------------------
+3)package vjit;
+import java.util.*;
+public class Matrix {
+	Scanner sc=new Scanner(System.in);
+	
+ int i, j;
+ int m = sc.nextInt();;
+ int n = sc.nextInt();;
+
+ int a[][]=new int[m][n];
+int a1[][]=new int[m][n];
+int sum[][]=new int[m][n];
+	private void readMatrix()
+	{
+	System.out.println("enter array1 values");
+		for( i=0;i<m;i++)
+		{
+			for( j=0;j<n;j++)
+			{
+			a[i][j]=sc.nextInt();
+			}
+		}
+		System.out.println("enter array2 values");
+		for( i=0;i<m;i++)
+		{
+			for( j=0;j<n;j++)
+			{
+			a1[i][j]=sc.nextInt();
+			}
+		}
+		
+		for( i=0;i<m;i++)
+		{
+			for( j=0;j<n;j++)
+			{
+			sum[i][j]=a[i][j]+a1[i][j];
+			}
+		}
+		
+	}
+	private void writeMatrix()
+	{
+	
+		System.out.println("Sum of the matrics");
+		for( i=0;i<m;i++)
+		{
+			for( j=0;j<n;j++)
+			{
+			System.out.print(sum[i][j]+"\t");
+			}
+			System.out.println("\n");
+		}
+	}
+	public static void main(String[] args)
+	{
+		
+	
+		Matrix Ma=new Matrix();
+		
+		System.out.println("Enter rows and column");
+		Ma.readMatrix();
+		Ma.writeMatrix();
+	
+	}
+}
+outPut:-
+enter array values
+array values are
+14553678757
+
+8910423479
+
+2345678924
+
+7895463145
+
+78961232025
+
+252222369968
+
+2258714526
+
+3987424587
+
+3697521478
+
+96331487455
+
+2
+2
+Enter rows and column
+enter array1 values
+2
+2
+1
+4
+enter array2 values
+54
+5
+85
+5
+Sum of the matrics
+56	7	
+
+86	9	
+
+----------------------------------------------------------------------------------------------------------------
